@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useState } from "react";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
+import AddChild from "./pages/AddChild";
+import ChildProfile from "./pages/ChildProfile";
+
 
 function App() {
+  const [user, setUser] = useState(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="text-center">
+        <Routes>
+          <Route path="/login" element={<Login onLoginSuccess={setUser} />} />
+          <Route path="/signup" element={<Signup onSignupSuccess={setUser} />} />
+          <Route path="/" element={user ? <h1>Welcome, {user.email}</h1> : <Navigate to="/login" />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/add-child" element={<AddChild />} />
+          <Route path="/child/:childId/:childName" element={<ChildProfile />} />
+          {/* // <Route path="/child/:childId/access-requests" element={<AccessRequests />} />
+          // <Route path="/child/:childId/web-activities" element={<WebActivities />} /> */}
+        </Routes>
+        {user && (
+          <button onClick={() => setUser(null)} className="p-2 mt-3 bg-red-500 text-white">
+            Logout
+          </button>
+        )}
+      </div>
+    </Router>
   );
 }
 
