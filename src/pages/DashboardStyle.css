@@ -1,0 +1,189 @@
+.dashboard-page {
+  padding: 20px 100px 10px 100px;
+  margin-top: 4%;
+}
+.logout-btn {
+  position: relative;
+  top: 14px;
+  width: 7%;
+  right: 20px;
+  padding: 8px 16px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  /* z-index: 0; */
+  transition: background-color 0.3s;
+
+}
+.logout-btn:hover {
+  background-color: #d32f2f;
+}
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.top-card {
+  background-color: #4CAF50;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 106px;
+  padding-bottom: 21px;
+}
+
+.top-card p {
+  color: white;
+}
+
+.top-picture img {
+  width: 200px;
+}
+
+.time-date .time {
+  font-size: 35px;
+}
+
+.greeting-card {
+  padding-left: 29px;
+}
+
+/* Updated Overview Box */
+.overview-card {
+  margin-top: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 20px;
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.overview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+}
+
+.add-child-btn {
+  background-color: #ffffff00;
+  color: #6e886f;
+  border: 1px solid #45a049;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  width: auto;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.add-child-btn:hover {
+  background-color: #45a049;
+  color: white;
+}
+
+.dash-title {
+  padding: 16px;
+  font-size: 1.2rem;
+  color: darkslategrey;
+  font-weight: bold;
+}
+
+/* Grid Layout for Child Profiles */
+.child-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+  gap: 16px;
+  justify-content: center;
+  padding: 16px;
+}
+
+.child-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  position: relative; 
+}
+
+.child-card:hover {
+  background: #f9f9f9;
+}
+
+
+.child-card img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+
+.child-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.child-name {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.child-last-active {
+  font-size: 0.85rem;
+  color: gray;
+}
+
+
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.delete-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+.delete-btn:hover img {
+  filter: brightness(0.8);
+}
+
+
+@media (max-width: 768px) {
+  .dashboard-page {
+    padding: 20px 20px 10px 20px;
+  }
+
+  .top-card {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 0;
+  }
+
+  .top-picture img {
+    width: 150px;
+  }
+
+  .time-date .time {
+    font-size: 28px;
+  }
+
+  .overview-card {
+    margin-top: 20px;
+  }
+}

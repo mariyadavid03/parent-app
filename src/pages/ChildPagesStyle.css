@@ -1,0 +1,253 @@
+
+.access-requests-container, .filtering-container, .browsing-logs-container {
+    margin-top: 4%;
+    padding: 20px;
+    margin-inline: 10%;
+    max-width: 1200px;
+    font-family: Arial, sans-serif;
+  }
+
+.add-url-btn {
+  background-color: #45a049;
+  color: white;
+  width: fit-content;
+  padding: 8px 16px;
+  background-color: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.add-url-btn:hover {
+  background-color: #388e3c;
+}
+
+.url-list-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  margin-top: 16px;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.modal-form-group {
+  margin-bottom: 15px;
+}
+
+.modal-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.modal-form-group input,
+.modal-form-group select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.save-btn {
+  background-color: #45a049;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: #388e3c;
+}
+
+.save-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.cancel-btn {
+  background-color: #f1f1f1;
+  color: #333;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.cancel-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+  h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  .category-item label {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .category-item label::after {
+    content: attr(title);
+    position: absolute;
+    top: 91%;
+    left: 329%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    font-size: 12px;
+    border-radius: 3px;
+    white-space: nowrap;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .category-item label:hover::after {
+    display: block;
+    opacity: 1;
+  }
+  .select-btn{
+    padding: 3px;
+    font-size: 0.9rem;
+    margin-left: 11px;
+  }
+  /* Back button */
+  .back-btn {
+    background-color: #ffffff00;
+    font-weight: 800;
+    font-size: 23px;
+    left: 66px;
+    color: #45a049;
+    position: fixed;
+    top: 75px;
+    width: 12px;
+}
+  
+  .back-btn:hover {
+    background-color: #ffffff;
+  }
+  
+  /* Table styling */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+  }
+  
+  .table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table th {
+    background-color: #d9ecd9;
+    color: #333;
+  }
+  
+  .table td a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+
+  .tab-section{
+    margin-top: 38px;
+  }
+
+  .tab-content {
+    background: #f1fff1;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  .tabs button{
+    margin-right: 1px;
+    border-radius: initial;
+    margin-bottom: 0px;
+    background-color: #45a049;
+    color: white;
+    width: auto;
+  }
+
+  .table td a:hover {
+    text-decoration: underline;
+  }
+  
+  .text-muted {
+    color: #6c757d;
+    text-align: center;
+  }
+  
+
+  button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .approve-btn {
+    background-color: #28a745;
+    color: white;
+    margin-right: 10px;
+  }
+  
+  .approve-btn:hover {
+    background-color: #218838;
+  }
+  
+  .deny-btn {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .deny-btn:hover {
+    background-color: #c82333;
+  }
+  

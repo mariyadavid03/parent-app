@@ -5,7 +5,8 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import AddChild from "./pages/AddChild";
 import ChildProfile from "./pages/ChildProfile";
-
+import FilteringConfig from "./pages/FilteringConfig";
+import BrowsingLogs from "./pages/BrowsingLogs";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -19,15 +20,19 @@ function App() {
           <Route path="/" element={user ? <h1>Welcome, {user.email}</h1> : <Navigate to="/login" />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/add-child" element={<AddChild />} />
+          <Route path="/child-profile/:childId/:childName" element={<ChildProfile />} />
           <Route path="/child/:childId/:childName" element={<ChildProfile />} />
+          <Route path="/filtering/:childId" element={<FilteringConfig />} />
+          <Route path="/web-activities/:childId" element={<BrowsingLogs />} />
+
           {/* // <Route path="/child/:childId/access-requests" element={<AccessRequests />} />
           // <Route path="/child/:childId/web-activities" element={<WebActivities />} /> */}
         </Routes>
-        {user && (
+        {/* {user && (
           <button onClick={() => setUser(null)} className="p-2 mt-3 bg-red-500 text-white">
             Logout
           </button>
-        )}
+        )} */}
       </div>
     </Router>
   );

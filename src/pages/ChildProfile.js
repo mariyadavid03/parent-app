@@ -1,26 +1,52 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getAccessRequests, getWebActivities } from "../firebase";
+import { doc, getFirestore, query, collection, where, getDocs, updateDoc, getDoc } from "firebase/firestore";
+import { getWebActivities } from "../firebase";
+import "./ChildProfileStyle.css";
+import ParentHeader from "../components/ParentHeader";
+
+const db = getFirestore();
 
 const ChildProfile = () => {
-  const { childId, childName } = useParams(); // Get the child ID from URL
-  const [activeTab, setActiveTab] = useState("menu");
-  const [webActivities, setWebActivities] = useState([]);
-  const [accessRequests, setAccessRequests] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { childId, childName } = useParams();
   const navigate = useNavigate();
+  const [name, setName] = useState(childName);
+  const [sensitivityLevel, setSensitivityLevel] = useState("Medium"); 
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [webActivities, setWebActivities] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [messagesLoading, setMessagesLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const q = query(
+          collection(db, "message"),
+          where("childProfileId", "==", childId)
+        );
+        const querySnapshot = await getDocs(q);
+        const messagesData = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        messagesData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        setMessages(messagesData);
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      } finally {
+        setMessagesLoading(false);
+      }
+    };
+  
+    fetchMessages();
+  }, [childId]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (activeTab === "access-requests") {
-          const requests = await getAccessRequests(childId);
-          setAccessRequests(requests);
-        }
-        if (activeTab === "web-activities") {
-          const activities = await getWebActivities(childId);
-          setWebActivities(activities);
-        }
+        const activities = await getWebActivities(childId);
+        setWebActivities(activities);
       } catch (error) {
         console.error("Error fetching data", error);
       }
@@ -28,88 +54,143 @@ const ChildProfile = () => {
     };
 
     fetchData();
-  }, [activeTab, childId]);
+  }, [childId]);
 
-  if (loading) return <p>Loading...</p>;
+  useEffect(() => {
+      const fetchSensitivityLevel = async () => {
+        try {
+          const q = query(collection(db, "filter configuration"), where("childId", "==", childId));
+          const querySnapshot = await getDocs(q);
+          if (!querySnapshot.empty) {
+            const configData = querySnapshot.docs[0].data();
+            setSensitivityLevel(configData.sensitivityLevel || "Medium");
+          }
+        } catch (error) {
+          console.error("Error fetching sensitivity level:", error);
+        }
+      };
+      fetchSensitivityLevel();
+    }, [childId]);
+
+    const handleSaveChanges = async () => {
+      try {
+        const childRef = doc(db, "child profile", childId); 
+        await updateDoc(childRef, { childName: name });
+    
+        const childSnapshot = await getDoc(childRef);
+        const updatedChildData = childSnapshot.data();
+        const updatedChildName = updatedChildData.childName;
+    
+        const filterConfigRef = query(
+          collection(db, "filter configuration"),
+          where("childId", "==", childId)
+        );
+        const filterConfigSnapshot = await getDocs(filterConfigRef);
+        if (!filterConfigSnapshot.empty) {
+          const filterConfigDoc = filterConfigSnapshot.docs[0];
+          await updateDoc(filterConfigDoc.ref, { sensitivityLevel: sensitivityLevel });
+        }
+    
+        setName(updatedChildName);  
+        navigate(`/child-profile/${childId}/${updatedChildName}`);
+        setShowEditModal(false);
+    
+        console.log("Updated Name:", updatedChildName);
+        console.log("Updated Sensitivity Level:", sensitivityLevel);
+      } catch (error) {
+        console.error("Error saving changes:", error);
+      }
+    };
+
+  if (loading) return <p className="loading-text">Loading...</p>;
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-xl font-bold mb-4">Child Profile: {childName}</h1>
+    <div>
+      <ParentHeader />
+      <div className="child-profile-container">
+      <button className="back-btn" onClick={() => navigate('/dashboard')}>{"<"} </button> {/* Back button */}
+        {/* Child Profile View */}
+        <div className="profile-box">
+          <img src="/assets/img-profile.png" alt="Child Profile" className="profile-img" />
+          <div className="profile-info">
+            <h2>{childName}</h2>
+            <p><strong>Sensitivity Level:</strong> {sensitivityLevel}</p>
+            <button className="edit-btn" onClick={() => setShowEditModal(true)}>Edit</button>
+          </div>
+        </div>
 
-      <div className="menu space-y-2">
-        <button
-          className="p-2 bg-blue-500 text-white rounded-md w-full"
-          onClick={() => setActiveTab("access-requests")}
-        >
-          Access Requests
-        </button>
-        <button
-          className="p-2 bg-gray-500 text-white rounded-md w-full"
-          onClick={() => setActiveTab("web-activities")}
-        >
-          Web Activities
-        </button>
-        <button
-          className="p-2 bg-green-500 text-white rounded-md w-full"
-          onClick={() => setActiveTab("filtering")}
-        >
-          Filtering Configuration
-        </button>
-      </div>
+        {/* Edit Modal */}
+        {showEditModal && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h2>Edit Profile</h2>
+              <label>Child Name:</label>
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
 
-      {/* Content for selected tab */}
-      <div className="mt-4">
-        {activeTab === "access-requests" && (
-          <div>
-            <h2 className="text-lg font-semibold">Access Requests</h2>
-            {accessRequests.length > 0 ? (
-              <ul className="mt-2 space-y-2">
-                {accessRequests.map((request) => (
-                  <li key={request.id} className="p-3 border rounded bg-gray-100">
-                    <p><strong>Type:</strong> {request.alertType}</p>
-                    <p><strong>Content:</strong> {request.content}</p>
-                    <p><strong>Status:</strong> {request.status}</p>
-                    <p><strong>Time:</strong> {new Date(request.timestamp.seconds * 1000).toLocaleString()}</p>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-500">No access requests.</p>
-            )}
+              <label>Sensitivity Level:</label>
+              <select value={sensitivityLevel} onChange={(e) => setSensitivityLevel(e.target.value)}>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+
+              <div className="modal-buttons">
+                <button className="save-btn" onClick={handleSaveChanges}>Save</button>
+                <button className="cancel-btn" onClick={() => setShowEditModal(false)}>Cancel</button>
+              </div>
+            </div>
           </div>
         )}
-        
-        {activeTab === "web-activities" && (
-          <div>
-            <h2 className="text-lg font-semibold">Web Activities</h2>
-            {webActivities.length > 0 ? (
-              <table className="table-auto w-full border-collapse mt-2">
-                <thead>
-                  <tr>
-                    <th className="border px-4 py-2">Activity Type</th>
-                    <th className="border px-4 py-2">Domain</th>
-                    <th className="border px-4 py-2">Timestamp</th>
-                    <th className="border px-4 py-2">URL</th>
+
+
+        {/* Child Dashboard - Clickable Boxes */}
+        <div className="dashboard">
+
+          <div className="dashboard-box" onClick={() => navigate(`/filtering/${childId}`)}>
+            <h3>Filtering Configuration</h3>
+            <p>Manage filtering rules</p>
+          </div>
+
+          <div className="dashboard-box" onClick={() => navigate(`/web-activities/${childId}`)}>
+            <h3>Activity Logs</h3>
+            <p>{webActivities.length} records logged</p>
+          </div>
+        </div>
+
+        {/* Alerts Box */}
+        <div className="alerts-box">
+          <h3>Alerts</h3>
+          {messagesLoading ? (
+            <p className="loading-text">Loading alerts...</p>
+          ) : messages.length === 0 ? (
+            <p>No alerts found</p>
+          ) : (
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Title</th>
+                  <th>URL</th>
+                </tr>
+              </thead>
+              <tbody>
+                {messages.map((message) => (
+                  <tr key={message.id}>
+                    <td>{new Date(message.timestamp).toLocaleString()}</td>
+                    <td>{message.type}</td>
+                    <td>{message.title}</td>
+                    <td>
+                      <a href={message.url} target="_blank" rel="noopener noreferrer">
+                        {message.url}
+                      </a>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {webActivities.map((activity, index) => (
-                    <tr key={index}>
-                      <td className="border px-4 py-2">{activity.activityType}</td>
-                      <td className="border px-4 py-2">{activity.domain}</td>
-                      <td className="border px-4 py-2">{new Date(activity.timestamp.seconds * 1000).toLocaleString()}</td>
-                      <td className="border px-4 py-2">{activity.url}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <p className="text-gray-500">No web activities found.</p>
-            )}
-          </div>
-        )}
-        
-        {activeTab === "filtering" && <p>Filtering configuration settings coming soon...</p>}
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
       </div>
     </div>
   );

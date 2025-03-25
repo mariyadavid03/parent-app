@@ -1,0 +1,186 @@
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.login-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  padding: 2rem;
+  background-color: #ffffff; 
+}
+
+.color-section {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+}
+
+.background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+h1.heading {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #4CAF50; 
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.text-red-500 {
+  color: #e3342f; 
+}
+
+.text-white {
+  color: white;
+}
+
+.bg-blue-500 {
+  background-color: #4CAF50; 
+}
+
+.bg-gray-500 {
+  background-color: #616161; 
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.gap-3 {
+  gap: 0.75rem;
+}
+
+.border {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type="email"], input[type="password"] {
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4CAF50; 
+  box-shadow: 0 0 5px rgba(0, 255, 0, 0.3); 
+}
+
+.nameEnter{
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 1rem;
+  
+}
+button[type="submit"] {
+  width: 33%;
+  background-color: #4CAF50; 
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049; 
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:focus {
+  outline: none;
+}
+
+form {
+  width: 100%;
+  max-width: 400px;
+  background-color: #ffffff; 
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  text-align: center;
+}
+
+form input {
+  background-color: #f9f9f9;
+}
+
+form input::placeholder {
+  color: #aaa;
+}
+
+button[type="submit"], .text-red-500 {
+  transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover, .text-red-500:hover {
+  opacity: 0.9;
+}
+
+.to-signup:hover{
+  cursor: pointer;
+  text-decoration: underline;
+  color: purple;
+}
+
+.name {
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 1rem;
+}

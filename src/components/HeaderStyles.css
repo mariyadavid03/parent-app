@@ -1,0 +1,95 @@
+
+.side-nav {
+    display: none;
+}
+
+.header-horizontal {
+    display: flex;
+    width: auto;
+    padding-block: 26px;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border-bottom: 1px solid rgb(191, 191, 191);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+
+.profile-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.profile-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 350px;
+    max-width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.profile-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.profile-modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.profile-modal-body {
+    margin-bottom: 15px;
+}
+
+.profile-info-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 5px;
+}
+
+.profile-info-item strong {
+    display: inline-block;
+    width: 120px;
+}
+
+.header-icons {
+    position: absolute;
+    right: 4%;
+    display: flex;
+    justify-content: space-between;
+    width: 8%;
+}
+
+.header-icons img {
+    margin-left: 13px;
+    width: 18px;
+    transition: ease-in 0.2s;
+    cursor: pointer;
+}
+
+.header-icons img:hover {
+    transform: scale(1.05);
+    transition: ease-in 0.2s;
+}
